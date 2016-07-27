@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Giphy Search!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+    <div id='searchArea'>
+        <h2>Search Giphy</h2>
+        <input type="text" id="searchTerm" />
+        <div><Button id="submitButton">Search Giphy!</Button></div>
+    </div>
+
+    <div class='images' id='giphyImage'></div>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+    var publicBetaApiKey = 'dc6zaTOxFJmzC';
+    var baseUrl = 'http://api.giphy.com/v1/gifs/search?limit=5&api_key='+publicBetaApiKey+'&q=';
+    // Grab the place we're going to put on the page after we fetch them
+    // This way, we don't make the page look it up everytime as we're looping
+    // over the images
+    var giphyImageArea = $('#giphyImage');
+
+    // The "e" that the callback function contains is an event object
+    $('#submitButton').click(function(e) {
+        // This keeps us from moving to a different page when we click a link
+        e.preventDefault();
+        // You reference a dom element in jquery by doing $(elementName)
+        // For a class, it will be $('.someName').  For ids, it will be
+        // $('#someName').
+
+        // This will delete everything inside the image area
+        giphyImageArea.html('');
+
+        // Below, we're getting the value of the dom element with the id
+        // of "searchTerm"
+        var searchTerm = $('#searchTerm').val();
+        // Verify that we HAVE a search term and not an empty text field
+        if (searchTerm.length > 0) {
+            // Jquery has a built in AJAX method that lets you GET or POST data.
+            // We declare the method (GET or POST) and a url, and then we
+            // create a callback for when we're done.
+            // We could have used $.get() which sets some of this data for us, or
+            // $.post() if we were doing a post.
+            // Read http://api.jquery.com/jquery.ajax/ for more info.
+            $.ajax({
+                method: 'GET',
+                url: baseUrl + searchTerm, // Here we add the search term to our base url
+                // Here we say that our data we expect is json.
+                // Jquery does a good job of figuring this out so it's usually unneeded
+                dataType: 'json'
+            }).done(function(giphyResults) {
+                console.log("DONE");
+                // This method gets ran after the AJAX call is successful.
+                // It gets passed the page's data that you requested
+                var images = giphyResults.data; // This gives us the array of images from the JSON object
+
+                if (images.length === 0) {
+                    giphyImageArea.html('<h4>No Results Found</h4>');
+                } else {
+                    // This loops over the images array and passes each image to a function defined here
+                    images.forEach(function(image) {
+                        console.log("looping over images");
+                        var imageUrl = image.images.fixed_height.url;
+                        var height = image.images.fixed_height.height;
+                        var width = image.images.fixed_height.width;
+
+                        var img = $('<img class="giphy">'); // Creates an image tag
+                        img.attr('src', imageUrl); // Sets the image's source
+                        img.attr('height', height).attr('width', width); // you can change together calls like this
+                        console.log(img);
+                        giphyImageArea.append(img); // Add the image to the image area
+                    });
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
