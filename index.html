@@ -163,52 +163,6 @@
                 </div><!-- END SECOND ROW -->
                 <hr>
                 <div id="repo_area">
-                    <div class="row tab"><!-- THIRD ROW -->
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6 blue">
-                                <h2 id="repo_title">universal-js-boilerplate</h2>
-                            </div>
-                            <div class="col-xs-12 col-sm-3">
-
-                            </div>
-                            <div class="col-xs-12 col-sm-3">
-                                <ul class="sources sources2">
-                                    <li class="lightgrey">Javascript</li>
-
-
-                                    <i class="fa fa-star inline lightgrey"></i>
-                                    <li class="lightgrey inline">9</li>
-
-
-
-
-                                    <i class="fa fa-code-fork inline lightgrey"></i>
-                                    <li class="lightgrey inline"> 3</li>
-
-
-                                </ul>
-                            </div>
-
-                        </div>
-                        <p id="repo_desc">A scaffolding npm project for Universal JS/Express/Node with Babel</p>
-                        <p class="lightgrey">Updated a day ago</p>
-                        <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-5">
-                                <div class="bar bar1"></div>
-                                <div class="bar bar2"></div>
-                                <div class="bar bar3"></div>
-                                <div class="bar bar4"></div>
-                                <div class="bar bar5"></div>
-                                <div class="bar bar6"></div>
-                                <div class="bar bar7"></div>
-                                <div class="bar bar8"></div>
-                                <div class="bar bar9"></div>
-
-                            </div>
-                            <div class="col-sm-1"></div>
-                        </div>
-                    </div>
                 </div>
                 <!--<div class="row tab">&lt;!&ndash; THIRD ROW &ndash;&gt;-->
                 <!--<div class="row">-->
@@ -449,12 +403,12 @@
                 }).done(function (userInformation) {
                     console.log("DONE");
 
-                    $(user_email).replaceWith('eduardojimenez9@yahoo.com');
-                    $(user_name).replaceWith('<h3>' + username + '</h3>');
-                    $(user_location).replaceWith(userInformation.location);
-                    $(profile_name).replaceWith('<h2>' + userInformation.name + '</h2>');
-                    $(user_html_url).replaceWith(userInformation.html_url);
-                    $(profile_image).replaceWith('<img src='+userInformation.avatar_url+' height="215" width="215">');
+                    $('#user_email').replaceWith('eduardojimenez9@yahoo.com');
+                    $('#user_name').replaceWith('<h3>' + username + '</h3>');
+                    $('#user_location').replaceWith(userInformation.location);
+                    $('#profile_name').replaceWith('<h2>' + userInformation.name + '</h2>');
+                    $('#user_html_url').replaceWith(userInformation.html_url);
+                    $('#profile_image').replaceWith('<img src='+userInformation.avatar_url+' height="215" width="215">');
                 });
 
                 $.ajax({
@@ -471,17 +425,47 @@
                             console.log("looping for repos");
                             var repoTitle = repo.name;
                             var repoDesc = repo.description;
-//                            $(repo_title).replaceWith(repoTitle);
-//                            $(repo_desc).replaceWith(repoDesc);
-                            var finalRepo = $('<div class = "repoClass">');
-                            finalRepo.attr('repo_title',repoTitle);
-                            finalRepo.attr('repo_desc',repoDesc);
-                            console.log(finalRepo);
-                            repoArea.append(finalRepo);
+                            var repoCode = '<div class="row tab"><!-- THIRD ROW -->\
+                            <div class="row">\
+                                    <div class="col-xs-12 col-sm-6 blue">\
+                                    <h2 id="repo_title">'+ repoTitle + '</h2>\
+                                    </div>\
+                                    <div class="col-xs-12 col-sm-3">\
+                                    </div>\
+                                    <div class="col-xs-12 col-sm-3">\
+                                    <ul class="sources sources2">\
+                                    <li class="lightgrey">Javascript</li>\
+                                    <li class="fa fa-star inline lightgrey"></li>\
+                                    <li class="lightgrey inline">9</li>\
+                                    <li class="fa fa-code-fork inline lightgrey"></li>\
+                                    <li class="lightgrey inline"> 3</li>\
+                                    </ul>\
+                                    </div>\
+                                    </div>\
+                                    <p id="repo_desc">' + repoDesc +' </p>\
+                            <p class="lightgrey">Updated a day ago</p>\
+                            <div class="row">\
+                                    <div class="col-sm-6"></div>\
+                                    <div class="col-sm-5">\
+                                    <div class="bar bar1"></div>\
+                                    <div class="bar bar2"></div>\
+                                    <div class="bar bar3"></div>\
+                                    <div class="bar bar4"></div>\
+                                    <div class="bar bar5"></div>\
+                                    <div class="bar bar6"></div>\
+                                    <div class="bar bar7"></div>\
+                                    <div class="bar bar8"></div>\
+                                    <div class="bar bar9"></div>\
+                                    </div>\
+                                    <div class="col-sm-1"></div>\
+                                    </div>\
+                                    </div>';
+                            console.log(repoCode);
+                            repoArea.append(repoCode);
                         })
                     }
 
-                })
+                });
 
 
             </script>
